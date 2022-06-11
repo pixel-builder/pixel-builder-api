@@ -1,8 +1,18 @@
 {
   "name": "pixel-builder-kafka",
   "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "docker-compose up",
-    "clean": "docker-compose down"
+    "kafka": "docker-compose up",
+    "kafka:clean": "docker-compose down",
+    "producer": "ts-node src/producer.ts",
+    "consumer": "ts-node src/consumer.ts"
+  },
+  "dependencies": {
+    "kafkajs": "^2.0.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3"
   }
 }
