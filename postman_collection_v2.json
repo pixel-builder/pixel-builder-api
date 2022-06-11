@@ -1,0 +1,759 @@
+{
+    "info": {
+        "_postman_id": "7ce02e97-b2a0-3e2a-5fca-85b4448310dd",
+        "name": "Kafka POC",
+        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Game Pixel - DEMO",
+            "item": [
+                {
+                    "name": "Step 01 - Create Topic for the Battle",
+                    "item": [
+                        {
+                            "name": "1 - Create Topic with 2 partitions (one per Team Canvas)",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n    \"topic_name\": \"pixel-game-battle-1\",\r\n    \"partitions_count\": 2,\r\n    \"replication_factor\": 1,\r\n    \"configs\": [\r\n        {\r\n            \"name\": \"cleanup.policy\",\r\n            \"value\": \"compact\"\r\n        },\r\n        {\r\n            \"name\": \"compression.type\",\r\n            \"value\": \"gzip\"\r\n        }\r\n    ]\r\n}"
+                                },
+                                "url": "localhost:8082/v3/clusters/lyO4foxoR9uuD8fyj8mgHQ/topics",
+                                "description": "Create Topic via Cluster"
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Step 02 - Create Consumer Group for each player in the Battle",
+                    "item": [
+                        {
+                            "name": "1 - Create Consumer Group - Player 1",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"name\": \"Team01-Player001\",\r\n  \"format\": \"json\",\r\n  \"auto.offset.reset\": \"earliest\",\r\n  \"auto.commit.enable\": \"false\"\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/battle1-team1-player1",
+                                "description": "Create a new consumer instance in the consumer group. The format parameter controls the deserialization of data from Kafka and the content type that must be used in the Accept header of subsequent read API requests performed against this consumer. For example, if the creation request specifies avro for the format, subsequent read requests should use Accept: application/vnd.kafka.avro.v2+json.\r\n\r\nNote that the response includes a URL including the host since the consumer is stateful and tied to a specific REST Proxy instance. Subsequent examples in this section use a Host header for this specific REST Proxy instance."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "2 - Create Consumer Group - Player 2",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"name\": \"Team01-Player002\",\r\n  \"format\": \"json\",\r\n  \"auto.offset.reset\": \"earliest\",\r\n  \"auto.commit.enable\": \"false\"\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/battle1-team1-player2",
+                                "description": "Create a new consumer instance in the consumer group. The format parameter controls the deserialization of data from Kafka and the content type that must be used in the Accept header of subsequent read API requests performed against this consumer. For example, if the creation request specifies avro for the format, subsequent read requests should use Accept: application/vnd.kafka.avro.v2+json.\r\n\r\nNote that the response includes a URL including the host since the consumer is stateful and tied to a specific REST Proxy instance. Subsequent examples in this section use a Host header for this specific REST Proxy instance."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "3 - Create Consumer Group - Player 3",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"name\": \"Team02-Player003\",\r\n  \"format\": \"json\",\r\n  \"auto.offset.reset\": \"earliest\",\r\n  \"auto.commit.enable\": \"false\"\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/battle1-team2-player3",
+                                "description": "Create a new consumer instance in the consumer group. The format parameter controls the deserialization of data from Kafka and the content type that must be used in the Accept header of subsequent read API requests performed against this consumer. For example, if the creation request specifies avro for the format, subsequent read requests should use Accept: application/vnd.kafka.avro.v2+json.\r\n\r\nNote that the response includes a URL including the host since the consumer is stateful and tied to a specific REST Proxy instance. Subsequent examples in this section use a Host header for this specific REST Proxy instance."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "4 - Create Consumer Group - Player 4",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"name\": \"Team02-Player004\",\r\n  \"format\": \"json\",\r\n  \"auto.offset.reset\": \"earliest\",\r\n  \"auto.commit.enable\": \"false\"\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/battle1-team2-player4",
+                                "description": "Create a new consumer instance in the consumer group. The format parameter controls the deserialization of data from Kafka and the content type that must be used in the Accept header of subsequent read API requests performed against this consumer. For example, if the creation request specifies avro for the format, subsequent read requests should use Accept: application/vnd.kafka.avro.v2+json.\r\n\r\nNote that the response includes a URL including the host since the consumer is stateful and tied to a specific REST Proxy instance. Subsequent examples in this section use a Host header for this specific REST Proxy instance."
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Step 03 -  Subcribe each Player to the Battle Topic",
+                    "item": [
+                        {
+                            "name": "1 - Subcribe Player 1 to the Battle Topic",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.jsonschema.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"topics\": [\r\n    \"pixel-game-battle-1\"\r\n  ]\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/battle1-team1-player1/instances/Team01-Player001/subscription",
+                                "description": "Subscribe to the given list of topics or a topic pattern to get dynamically assigned partitions. \r\nIf a prior subscription exists, it would be replaced by the latest subscription."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "2 - Subcribe Player 2 to the Battle Topic",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.jsonschema.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"topics\": [\r\n    \"pixel-game-battle-1\"\r\n  ]\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/battle1-team1-player2/instances/Team01-Player002/subscription",
+                                "description": "Subscribe to the given list of topics or a topic pattern to get dynamically assigned partitions. \r\nIf a prior subscription exists, it would be replaced by the latest subscription."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "3 - Subcribe Player 3 to the Battle Topic",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.jsonschema.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"topics\": [\r\n    \"pixel-game-battle-1\"\r\n  ]\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/battle1-team2-player3/instances/Team02-Player003/subscription",
+                                "description": "Subscribe to the given list of topics or a topic pattern to get dynamically assigned partitions. \r\nIf a prior subscription exists, it would be replaced by the latest subscription."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "4 - Subcribe Player 4 to the Battle Topic",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.jsonschema.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"topics\": [\r\n    \"pixel-game-battle-1\"\r\n  ]\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/battle1-team2-player4/instances/Team02-Player004/subscription",
+                                "description": "Subscribe to the given list of topics or a topic pattern to get dynamically assigned partitions. \r\nIf a prior subscription exists, it would be replaced by the latest subscription."
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Step 04 - Producers create Messages into the Battle Topic",
+                    "item": [
+                        {
+                            "name": "1 - Send Message to Battle Topic - Team 1 Canvas (partition 0)",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"records\": [\r\n    {\r\n      \"key\": \"Team1-Canvas\",\r\n      \"value\": {\"team\": \"Team01\", \"player\": \"Giselle\", \"positionX\": \"4321\", \"positionY\": \"1234\", \"color\": \"RGB_#3445BB\"}\r\n    },\r\n    {\r\n      \"key\": \"Team1-Canvas\",\r\n      \"value\": {\"team\": \"Team02\", \"player\": \"Mike\", \"positionX\": \"9876\", \"positionY\": \"6789\", \"color\": \"RGB_#3555BB\"}\r\n    }\r\n  ]\r\n}"
+                                },
+                                "url": "localhost:8082/topics/pixel-game-battle-1/partitions/0",
+                                "description": "Producer - Creating new message into a specific Topic and Partition"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "2 - Send Message to Battle Topic - Team 2 Canvas (partition 1)",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"records\": [\r\n    {\r\n      \"key\": \"Team2-Canvas\",\r\n      \"value\": {\"team\": \"Team01\", \"player\": \"Tony\", \"positionX\": \"21312312\", \"positionY\": \"9879879\", \"color\": \"RGB_#1235AA\"}\r\n    },\r\n    {\r\n      \"key\": \"Team2-Canvas\",\r\n      \"value\": {\"team\": \"Team02\", \"player\": \"Cristal\", \"positionX\": \"54654656\", \"positionY\": \"123213\", \"color\": \"RGB_#3665CC\"}\r\n    }\r\n  ]\r\n}"
+                                },
+                                "url": "localhost:8082/topics/pixel-game-battle-1/partitions/1",
+                                "description": "Producer - Creating new message into a specific Topic and Partition"
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Step 05 - Consumers get data from Battle Topics and Partitions",
+                    "item": [
+                        {
+                            "name": "1 - Player 1 pooling data from Battle Topic (both partitions)",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"topics\": [\r\n    \"new-battle-topic\"\r\n  ]\r\n}"
+                                },
+                                "url": {
+                                    "raw": "localhost:8082/consumers/battle1-team1-player1/instances/Team01-Player001/records?timeout=3000&max_bytes=300000",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8082",
+                                    "path": [
+                                        "consumers",
+                                        "battle1-team1-player1",
+                                        "instances",
+                                        "Team01-Player001",
+                                        "records"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "timeout",
+                                            "value": "3000"
+                                        },
+                                        {
+                                            "key": "max_bytes",
+                                            "value": "300000"
+                                        }
+                                    ]
+                                },
+                                "description": "Fetch data for the topics or partitions specified using one of the subscribe/assign APIs.\r\n\r\nThe format of the embedded data returned by this request is determined by the format specified in the initial consumer instance creation request and must match the format of the Accept header. Mismatches will result in error code 40601.\r\n\r\nNote that this request must be made to the specific REST Proxy instance holding the consumer instance."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "2 - Player 2 pooling data from Battle Topic (both partitions)",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"topics\": [\r\n    \"new-battle-topic\"\r\n  ]\r\n}"
+                                },
+                                "url": {
+                                    "raw": "localhost:8082/consumers/battle1-team1-player2/instances/Team01-Player002/records?timeout=3000&max_bytes=300000",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8082",
+                                    "path": [
+                                        "consumers",
+                                        "battle1-team1-player2",
+                                        "instances",
+                                        "Team01-Player002",
+                                        "records"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "timeout",
+                                            "value": "3000"
+                                        },
+                                        {
+                                            "key": "max_bytes",
+                                            "value": "300000"
+                                        }
+                                    ]
+                                },
+                                "description": "Fetch data for the topics or partitions specified using one of the subscribe/assign APIs.\r\n\r\nThe format of the embedded data returned by this request is determined by the format specified in the initial consumer instance creation request and must match the format of the Accept header. Mismatches will result in error code 40601.\r\n\r\nNote that this request must be made to the specific REST Proxy instance holding the consumer instance."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "3 - Player 3 pooling data from Battle Topic (both partitions)",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"topics\": [\r\n    \"new-battle-topic\"\r\n  ]\r\n}"
+                                },
+                                "url": {
+                                    "raw": "localhost:8082/consumers/battle1-team2-player3/instances/Team02-Player003/records?timeout=3000&max_bytes=300000",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8082",
+                                    "path": [
+                                        "consumers",
+                                        "battle1-team2-player3",
+                                        "instances",
+                                        "Team02-Player003",
+                                        "records"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "timeout",
+                                            "value": "3000"
+                                        },
+                                        {
+                                            "key": "max_bytes",
+                                            "value": "300000"
+                                        }
+                                    ]
+                                },
+                                "description": "Fetch data for the topics or partitions specified using one of the subscribe/assign APIs.\r\n\r\nThe format of the embedded data returned by this request is determined by the format specified in the initial consumer instance creation request and must match the format of the Accept header. Mismatches will result in error code 40601.\r\n\r\nNote that this request must be made to the specific REST Proxy instance holding the consumer instance."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "4 - Player 4 pooling data from Battle Topic (both partitions)",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"topics\": [\r\n    \"new-battle-topic\"\r\n  ]\r\n}"
+                                },
+                                "url": {
+                                    "raw": "localhost:8082/consumers/battle1-team2-player4/instances/Team02-Player004/records?timeout=3000&max_bytes=300000",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8082",
+                                    "path": [
+                                        "consumers",
+                                        "battle1-team2-player4",
+                                        "instances",
+                                        "Team02-Player004",
+                                        "records"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "timeout",
+                                            "value": "3000"
+                                        },
+                                        {
+                                            "key": "max_bytes",
+                                            "value": "300000"
+                                        }
+                                    ]
+                                },
+                                "description": "Fetch data for the topics or partitions specified using one of the subscribe/assign APIs.\r\n\r\nThe format of the embedded data returned by this request is determined by the format specified in the initial consumer instance creation request and must match the format of the Accept header. Mismatches will result in error code 40601.\r\n\r\nNote that this request must be made to the specific REST Proxy instance holding the consumer instance."
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Step 06 - Exception Case - Reset Offsets comitted to a Player",
+                    "item": [
+                        {
+                            "name": "1 - Exception -  Reset Offsets comitted to Player 1",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"partitions\": [\r\n    {\r\n      \"topic\": \"pixel-game-battle-1\",\r\n      \"partition\": 0\r\n    },\r\n    {\r\n      \"topic\": \"pixel-game-battle-1\",\r\n      \"partition\": 1\r\n    }\r\n\r\n  ]\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/battle1-team1-player1/instances/Team01-Player001/positions/beginning",
+                                "description": "Seek to the first offset for each of the given partitions."
+                            },
+                            "response": []
+                        }
+                    ]
+                }
+            ],
+            "description": "Requests that simulate Game Pixel working"
+        },
+        {
+            "name": "REST - Proxy Package",
+            "item": [
+                {
+                    "name": "Cluster",
+                    "item": [
+                        {
+                            "name": "Cluster - Get list of Clusters",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "url": "localhost:8082/v3/clusters/",
+                                "description": "Returns a list of known Kafka clusters. Currently both Kafka and Kafka REST Proxy are only aware of the Kafka cluster pointed at by the bootstrap.servers configuration. \nTherefore only one Kafka cluster will be returned in the response."
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Topic",
+                    "item": [
+                        {
+                            "name": "Topic - Get list",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "url": "localhost:8082/topics/",
+                                "description": "Returning list of Topics"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Topic - Get  {id}",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "url": "localhost:8082/topics/pixel-game-battle-1",
+                                "description": "Get specific Topic"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Topic - Get  Partitions from Topic {id}",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "url": "localhost:8082/topics/pixel-game-battle-1/partitions",
+                                "description": "Get Partitions from specific Topic"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Topic - Create Topic via Cluster",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n    \"topic_name\": \"test-game-battle\",\r\n    \"partitions_count\": 2,\r\n    \"replication_factor\": 1,\r\n    \"configs\": [\r\n        {\r\n            \"name\": \"cleanup.policy\",\r\n            \"value\": \"compact\"\r\n        },\r\n        {\r\n            \"name\": \"compression.type\",\r\n            \"value\": \"gzip\"\r\n        }\r\n    ]\r\n}"
+                                },
+                                "url": "localhost:8082/v3/clusters/TPalmYR4QeeVZDma_rvzsQ/topics",
+                                "description": "Create Topic via Cluster"
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Consumer",
+                    "item": [
+                        {
+                            "name": "Consumer - Create Consumer Group and Instance into this Group",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"name\": \"player_002\",\r\n  \"format\": \"json\",\r\n  \"auto.offset.reset\": \"earliest\",\r\n  \"auto.commit.enable\": \"false\"\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/test-battle-team1",
+                                "description": "Create a new consumer instance in the consumer group. The format parameter controls the deserialization of data from Kafka and the content type that must be used in the Accept header of subsequent read API requests performed against this consumer. For example, if the creation request specifies avro for the format, subsequent read requests should use Accept: application/vnd.kafka.avro.v2+json.\r\n\r\nNote that the response includes a URL including the host since the consumer is stateful and tied to a specific REST Proxy instance. Subsequent examples in this section use a Host header for this specific REST Proxy instance."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Consumer - Subcribe Group instance to a Topic",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.jsonschema.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"topics\": [\r\n    \"test-game-battle\"\r\n  ]\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/test-battle-team1/instances/player_002/subscription",
+                                "description": "Subscribe to the given list of topics or a topic pattern to get dynamically assigned partitions. \r\nIf a prior subscription exists, it would be replaced by the latest subscription."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Consumer - Get data for the topics or partitions",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"topics\": [\r\n    \"new-battle-topic\"\r\n  ]\r\n}"
+                                },
+                                "url": {
+                                    "raw": "localhost:8082/consumers/test-battle-team1/instances/player_001/records?timeout=3000&max_bytes=300000",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "8082",
+                                    "path": [
+                                        "consumers",
+                                        "test-battle-team1",
+                                        "instances",
+                                        "player_001",
+                                        "records"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "timeout",
+                                            "value": "3000"
+                                        },
+                                        {
+                                            "key": "max_bytes",
+                                            "value": "300000"
+                                        }
+                                    ]
+                                },
+                                "description": "Fetch data for the topics or partitions specified using one of the subscribe/assign APIs.\r\n\r\nThe format of the embedded data returned by this request is determined by the format specified in the initial consumer instance creation request and must match the format of the Accept header. Mismatches will result in error code 40601.\r\n\r\nNote that this request must be made to the specific REST Proxy instance holding the consumer instance."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Consumer Group - Get list of Groups via Cluster",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "url": "localhost:8082/v3/clusters/AK6BQpuTSnGTnHsizNwH2A/consumer-groups/",
+                                "description": "Returns the list of consumer groups that belong to the specified Kafka cluster."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Consumer Group - Get {id}",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "url": "localhost:8082/v3/clusters/tlpm5g9HQuK4GnvIXhG7_A/consumer-groups/",
+                                "description": "Returns the consumer group specified by the consumer_group_id."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Consumer Group - Get list of Consumers into a Group",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "url": "localhost:8082/v3/clusters/TPalmYR4QeeVZDma_rvzsQ/consumer-groups/test-battle-team1/consumers",
+                                "description": "Returns a list of consumers that belong to the specified consumer group."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Consumer - Get Topics subcribed to a specific Group instance",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"topics\": [\r\n    \"new-battle-topic\"\r\n  ]\r\n}"
+                                },
+                                "url": "localhost:8082/consumers/battle1-player2/instances/player_2/subscription",
+                                "description": "Get the current subscribed list of topics."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Consumer - Delete instance in a consumer Group",
+                            "request": {
+                                "method": "DELETE",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": ""
+                                },
+                                "url": "localhost:8082/consumers/battle1-player1/instances/player_1/",
+                                "description": "Destroy the consumer instance."
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Producer",
+                    "item": [
+                        {
+                            "name": "Producer - Create Message into a Topic",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"records\": [\r\n    {\r\n      \"key\": \"Team1-Canvas\",\r\n      \"value\": {\"player\": \"Tony\", \"positionX\": \"123\", \"positionY\": \"456\", \"color\": \"RGB_#3580BB\"}\r\n    },\r\n    {\r\n      \"key\": \"Team2-Canvas\",\r\n      \"value\": {\"player\": \"Mike\", \"positionX\": \"789\", \"positionY\": \"987\", \"color\": \"RGB_#7E84F7\"}\r\n    }\r\n  ]\r\n}"
+                                },
+                                "url": "localhost:8082/topics/test-game-battle",
+                                "description": "Produce messages to a topic, optionally specifying keys or partitions for the messages. If no partition is provided, one will be chosen based on the hash of the key. \r\nIf no key is provided, the partition will be chosen for each message in a round-robin fashion.\r\n\r\nFor the avro, protobuf, and jsonschema embedded formats, you must provide information about schemas and the REST Proxy must be configured with the URL to access Schema Registry (schema.registry.url). Schemas may be provided as the full schema encoded as a string, or, after the initial request may be provided as the schema ID returned with the first response."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Producer - Create Message into a Topic and specific Partition",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/vnd.kafka.json.v2+json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\r\n  \"records\": [\r\n    {\r\n      \"key\": \"Team2-Canvas\",\r\n      \"value\": {\"player\": \"Mike\", \"positionX\": \"4321\", \"positionY\": \"1234\", \"color\": \"RGB_#3445BB\"}\r\n    }\r\n  ]\r\n}"
+                                },
+                                "url": "localhost:8082/topics/test-game-battle/partitions/1",
+                                "description": "Producer - Creating new message into a specific Topic and Partition"
+                            },
+                            "response": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
