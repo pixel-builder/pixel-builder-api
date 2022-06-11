@@ -1,4 +1,8 @@
 {
   "name": "pixel-builder-kafka",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "scripts": {
+    "start": "docker-compose up",
+    "clean": "docker-compose down"
+  }
 }
